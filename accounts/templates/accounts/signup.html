@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Create your CareerTrack account — free job application tracker">
+    <title>Create Account — CareerTrack</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #EEF2FF 0%, #F5F3FF 50%, #EDE9FE 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 32px 24px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .auth-wrap {
+            width: 100%;
+            max-width: 460px;
+        }
+
+        .auth-brand {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 24px;
+            text-decoration: none;
+        }
+
+        .auth-brand-icon {
+            width: 38px;
+            height: 38px;
+            background: #4F46E5;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(79, 70, 229, .35);
+        }
+
+        .auth-brand-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: #111827;
+            letter-spacing: -.4px;
+        }
+
+        .auth-card {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(79, 70, 229, .1), 0 4px 20px rgba(0, 0, 0, .07);
+            padding: 40px;
+            animation: cardIn .3s ease;
+        }
+
+        @keyframes cardIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .auth-heading {
+            font-size: 22px;
+            font-weight: 700;
+            color: #111827;
+            text-align: center;
+            letter-spacing: -.4px;
+            margin-bottom: 6px;
+        }
+
+        .auth-sub {
+            font-size: 13.5px;
+            color: #6B7280;
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        /* Two-column name row */
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 18px;
+        }
+
+        .fg {
+            margin-bottom: 18px;
+        }
+
+        .fg-inner {
+            margin-bottom: 0;
+        }
+
+        /* inside form-row, no bottom margin */
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 6px;
+        }
+
+        .opt-badge {
+            font-size: 10.5px;
+            font-weight: 400;
+            color: #9CA3AF;
+            margin-left: 4px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1.5px solid #E5E7EB;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            color: #111827;
+            background: #fff;
+            outline: none;
+            transition: border-color .15s, box-shadow .15s;
+        }
+
+        input:focus {
+            border-color: #4F46E5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, .1);
+        }
+
+        input::placeholder {
+            color: #9CA3AF;
+        }
+
+        .field-err {
+            font-size: 12px;
+            color: #DC2626;
+            margin-top: 5px;
+        }
+
+        /* Password strength bar */
+        .pw-bar-wrap {
+            margin-top: 8px;
+            height: 4px;
+            background: #E5E7EB;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .pw-bar {
+            height: 100%;
+            width: 0%;
+            border-radius: 4px;
+            transition: width .3s, background .3s;
+        }
+
+        .pw-hint {
+            font-size: 11.5px;
+            margin-top: 5px;
+        }
+
+        /* Password rules list */
+        .pw-rules {
+            font-size: 12px;
+            color: #6B7280;
+            margin-top: 8px;
+            padding-left: 16px;
+            line-height: 1.8;
+        }
+
+        /* Auth error banner */
+        .auth-error {
+            background: #FEF2F2;
+            border: 1px solid #FECACA;
+            border-radius: 8px;
+            padding: 11px 14px;
+            font-size: 13px;
+            color: #B91C1C;
+            margin-bottom: 18px;
+        }
+
+        .btn-auth {
+            width: 100%;
+            padding: 11px;
+            background: #4F46E5;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 14.5px;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: background .15s, transform .15s, box-shadow .15s;
+            margin-top: 6px;
+        }
+
+        .btn-auth:hover {
+            background: #4338CA;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 18px rgba(79, 70, 229, .35);
+        }
+
+        .btn-auth:disabled {
+            opacity: .6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .auth-footer {
+            text-align: center;
+            margin-top: 22px;
+            font-size: 13.5px;
+            color: #6B7280;
+        }
+
+        .auth-footer a {
+            color: #4F46E5;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .auth-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 22px 0;
+            color: #9CA3AF;
+            font-size: 12px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #E5E7EB;
+        }
+
+        /* Security badge */
+        .security-note {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            justify-content: center;
+            margin-top: 18px;
+            font-size: 11.5px;
+            color: #9CA3AF;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="auth-wrap">
+
+        <a class="auth-brand" href="/">
+            <div class="auth-brand-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5">
+                    <path d="M9 12l2 2 4-4" />
+                    <path
+                        d="M20.618 5.984A11.955 11.955 0 0 1 12 2.944a11.955 11.955 0 0 1-8.618 3.04A12.02 12.02 0 0 0 3 9c0 5.591 3.824 10.29 9 11.622C17.176 19.29 21 14.591 21 9c0-1.052-.145-2.07-.382-3.016z" />
+                </svg>
+            </div>
+            <span class="auth-brand-name">CareerTrack</span>
+        </a>
+
+        <div class="auth-card">
+            <h1 class="auth-heading">Create your account</h1>
+            <p class="auth-sub">Free forever — start tracking your job search today</p>
+
+            <!-- Form-level errors -->
+            {% if form.non_field_errors %}
+            <div class="auth-error">{{ form.non_field_errors.0 }}</div>
+            {% endif %}
+
+            <form method="POST" id="signup-form">
+                {% csrf_token %}
+
+                <!-- First Name + Last Name in one row -->
+                <div class="form-row">
+                    <div>
+                        <label for="id_first_name">First Name <span class="opt-badge">optional</span></label>
+                        <input type="text" id="id_first_name" name="first_name"
+                            value="{{ form.first_name.value|default:'' }}" placeholder="Ada">
+                        {% if form.first_name.errors %}
+                        <p class="field-err">{{ form.first_name.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <label for="id_last_name">Last Name <span class="opt-badge">optional</span></label>
+                        <input type="text" id="id_last_name" name="last_name"
+                            value="{{ form.last_name.value|default:'' }}" placeholder="Lovelace">
+                        {% if form.last_name.errors %}
+                        <p class="field-err">{{ form.last_name.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="fg">
+                    <label for="id_username">Username</label>
+                    <input type="text" id="id_username" name="username" value="{{ form.username.value|default:'' }}"
+                        placeholder="e.g. ada_lovelace" autocomplete="username" autofocus>
+                    {% if form.username.errors %}
+                    <p class="field-err">{{ form.username.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <div class="fg">
+                    <label for="id_email">Email Address</label>
+                    <input type="email" id="id_email" name="email" value="{{ form.email.value|default:'' }}"
+                        placeholder="you@example.com" autocomplete="email">
+                    {% if form.email.errors %}
+                    <p class="field-err">{{ form.email.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <div class="fg">
+                    <label for="id_password1">Password</label>
+                    <input type="password" id="id_password1" name="password1" placeholder="Create a strong password"
+                        autocomplete="new-password">
+                    <!-- Live strength bar -->
+                    <div class="pw-bar-wrap">
+                        <div class="pw-bar" id="pw-bar"></div>
+                    </div>
+                    <p class="pw-hint" id="pw-hint" style="color:#9CA3AF">Enter a password</p>
+                    {% if form.password1.errors %}
+                    <p class="field-err">{{ form.password1.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <div class="fg">
+                    <label for="id_password2">Confirm Password</label>
+                    <input type="password" id="id_password2" name="password2" placeholder="Repeat your password"
+                        autocomplete="new-password">
+                    {% if form.password2.errors %}
+                    <p class="field-err">{{ form.password2.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <ul class="pw-rules">
+                    <li>At least 8 characters long</li>
+                    <li>Cannot be entirely numeric</li>
+                    <li>Cannot be too similar to your username</li>
+                </ul>
+
+                <button type="submit" class="btn-auth" id="signup-btn" style="margin-top:20px">
+                    Create Account
+                </button>
+            </form>
+
+            <div class="divider">already have an account?</div>
+
+            <p class="auth-footer">
+                <a href="{% url 'login' %}">Sign in instead →</a>
+            </p>
+
+            <p class="security-note">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                </svg>
+                Passwords are stored encrypted using PBKDF2-SHA256
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Live password strength meter
+        const pwInput = document.getElementById('id_password1');
+        const pwBar = document.getElementById('pw-bar');
+        const pwHint = document.getElementById('pw-hint');
+
+        const levels = [
+            { max: 1, color: '#EF4444', label: 'Too short', pct: '15%' },
+            { max: 2, color: '#F97316', label: 'Weak', pct: '35%' },
+            { max: 3, color: '#EAB308', label: 'Fair', pct: '60%' },
+            { max: 4, color: '#22C55E', label: 'Good', pct: '80%' },
+            { max: 99, color: '#10B981', label: 'Strong ✓', pct: '100%' },
+        ];
+
+        function scorePassword(pw) {
+            if (pw.length < 4) return 0;
+            if (pw.length < 8) return 1;
+            let score = 1;
+            if (/[A-Z]/.test(pw)) score++;
+            if (/[0-9]/.test(pw)) score++;
+            if (/[^A-Za-z0-9]/.test(pw)) score++;
+            if (pw.length >= 12) score++;
+            return Math.min(score, 5);
+        }
+
+        pwInput.addEventListener('input', () => {
+            const pw = pwInput.value;
+            const score = scorePassword(pw);
+
+            if (!pw) {
+                pwBar.style.width = '0%';
+                pwHint.textContent = 'Enter a password';
+                pwHint.style.color = '#9CA3AF';
+                return;
+            }
+
+            const lvl = levels[Math.max(0, score - 1)];
+            pwBar.style.width = lvl.pct;
+            pwBar.style.background = lvl.color;
+            pwHint.textContent = lvl.label;
+            pwHint.style.color = lvl.color;
+        });
+
+        // Loading state on submit
+        document.getElementById('signup-form').addEventListener('submit', function () {
+            const btn = document.getElementById('signup-btn');
+            btn.textContent = 'Creating account…';
+            btn.disabled = true;
+        });
+    </script>
+</body>
+
+</html>

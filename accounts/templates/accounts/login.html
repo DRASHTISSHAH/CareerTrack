@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sign in to CareerTrack — your personal job application tracker">
+    <title>Sign In — CareerTrack</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #EEF2FF 0%, #F5F3FF 50%, #EDE9FE 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .auth-wrap {
+            width: 100%;
+            max-width: 420px;
+        }
+
+        /* Brand header above card */
+        .auth-brand {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 24px;
+            text-decoration: none;
+        }
+
+        .auth-brand-icon {
+            width: 38px;
+            height: 38px;
+            background: #4F46E5;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(79, 70, 229, .35);
+        }
+
+        .auth-brand-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: #111827;
+            letter-spacing: -.4px;
+        }
+
+        /* Card */
+        .auth-card {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(79, 70, 229, .1), 0 4px 20px rgba(0, 0, 0, .07);
+            padding: 40px;
+            animation: cardIn .3s ease;
+        }
+
+        @keyframes cardIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .auth-heading {
+            font-size: 22px;
+            font-weight: 700;
+            color: #111827;
+            text-align: center;
+            letter-spacing: -.4px;
+            margin-bottom: 6px;
+        }
+
+        .auth-sub {
+            font-size: 13.5px;
+            color: #6B7280;
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        /* Error banner */
+        .auth-error {
+            background: #FEF2F2;
+            border: 1px solid #FECACA;
+            border-radius: 8px;
+            padding: 11px 14px;
+            font-size: 13px;
+            color: #B91C1C;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        /* Form */
+        .fg {
+            margin-bottom: 18px;
+        }
+
+        .fg label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 6px;
+        }
+
+        .fg input {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1.5px solid #E5E7EB;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            color: #111827;
+            background: #fff;
+            outline: none;
+            transition: border-color .15s, box-shadow .15s;
+        }
+
+        .fg input:focus {
+            border-color: #4F46E5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, .1);
+        }
+
+        .fg input::placeholder {
+            color: #9CA3AF;
+        }
+
+        .field-err {
+            font-size: 12px;
+            color: #DC2626;
+            margin-top: 5px;
+        }
+
+        /* Submit button */
+        .btn-auth {
+            width: 100%;
+            padding: 11px;
+            background: #4F46E5;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 14.5px;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: background .15s, transform .15s, box-shadow .15s;
+            margin-top: 6px;
+        }
+
+        .btn-auth:hover {
+            background: #4338CA;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 18px rgba(79, 70, 229, .35);
+        }
+
+        .btn-auth:active {
+            transform: translateY(0);
+        }
+
+        /* Footer link */
+        .auth-footer {
+            text-align: center;
+            margin-top: 22px;
+            font-size: 13.5px;
+            color: #6B7280;
+        }
+
+        .auth-footer a {
+            color: #4F46E5;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .auth-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Divider */
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 22px 0;
+            color: #9CA3AF;
+            font-size: 12px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #E5E7EB;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="auth-wrap">
+
+        <!-- Brand -->
+        <a class="auth-brand" href="/">
+            <div class="auth-brand-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5">
+                    <path d="M9 12l2 2 4-4" />
+                    <path
+                        d="M20.618 5.984A11.955 11.955 0 0 1 12 2.944a11.955 11.955 0 0 1-8.618 3.04A12.02 12.02 0 0 0 3 9c0 5.591 3.824 10.29 9 11.622C17.176 19.29 21 14.591 21 9c0-1.052-.145-2.07-.382-3.016z" />
+                </svg>
+            </div>
+            <span class="auth-brand-name">CareerTrack</span>
+        </a>
+
+        <div class="auth-card">
+            <h1 class="auth-heading">Welcome back</h1>
+            <p class="auth-sub">Sign in to your account to continue</p>
+
+            <!-- Non-field errors (wrong username/password) -->
+            {% if form.non_field_errors %}
+            <div class="auth-error">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    style="flex-shrink:0;margin-top:1px">
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="12" y1="8" x2="12" y2="12" />
+                    <line x1="12" y1="16" x2="12.01" y2="16" />
+                </svg>
+                {{ form.non_field_errors.0 }}
+            </div>
+            {% endif %}
+
+            <!-- Django messages (e.g. "You have been logged out") -->
+            {% if messages %}
+            {% for m in messages %}
+            <div class="auth-error"
+                style="{% if m.tags == 'success' %}background:#F0FDF4;border-color:#BBF7D0;color:#15803D;{% endif %}">
+                {{ m }}
+            </div>
+            {% endfor %}
+            {% endif %}
+
+            <form method="POST" id="login-form">
+                {% csrf_token %}
+
+                <div class="fg">
+                    <label for="id_username">Username</label>
+                    <input type="text" id="id_username" name="username" value="{{ form.username.value|default:'' }}"
+                        placeholder="Enter your username" autocomplete="username" autofocus>
+                    {% if form.username.errors %}
+                    <p class="field-err">{{ form.username.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <div class="fg">
+                    <label for="id_password">Password</label>
+                    <input type="password" id="id_password" name="password" placeholder="Enter your password"
+                        autocomplete="current-password">
+                    {% if form.password.errors %}
+                    <p class="field-err">{{ form.password.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <button type="submit" class="btn-auth" id="login-btn">Sign In</button>
+            </form>
+
+            <div class="divider">or</div>
+
+            <p class="auth-footer">
+                Don't have an account? <a href="{% url 'signup' %}">Create one free</a>
+            </p>
+        </div>
+
+    </div>
+
+    <script>
+        // Show loading state on submit
+        document.getElementById('login-form').addEventListener('submit', function () {
+            const btn = document.getElementById('login-btn');
+            btn.textContent = 'Signing in…';
+            btn.disabled = true;
+        });
+    </script>
+</body>
+
+</html>
