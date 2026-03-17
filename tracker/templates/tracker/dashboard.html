@@ -1,0 +1,310 @@
+{% extends "tracker/base.html" %}
+{% block title %}Dashboard — CareerTrack{% endblock %}
+
+{% block style %}
+<style>
+    .stat-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 14px;
+        margin-bottom: 28px
+    }
+
+    .stat-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--r-md);
+        padding: 20px;
+        box-shadow: var(--sh-sm)
+    }
+
+    .stat-label {
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: .5px;
+        color: var(--muted);
+        margin-bottom: 6px
+    }
+
+    .stat-value {
+        font-size: 30px;
+        font-weight: 700;
+        letter-spacing: -1px;
+        color: var(--primary)
+    }
+
+    .stat-sub {
+        font-size: 12.5px;
+        color: var(--muted);
+        margin-top: 4px
+    }
+
+    .rate-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 14px;
+        margin-bottom: 28px
+    }
+
+    .rate-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--r-md);
+        padding: 16px 18px;
+        box-shadow: var(--sh-sm);
+        text-align: center
+    }
+
+    .rate-val {
+        font-size: 26px;
+        font-weight: 700;
+        letter-spacing: -.5px
+    }
+
+    .rate-lbl {
+        font-size: 12px;
+        color: var(--muted);
+        margin-top: 4px
+    }
+
+    .panels {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px
+    }
+
+    .panel-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--r-md);
+        overflow: hidden;
+        box-shadow: var(--sh-sm)
+    }
+
+    .panel-head {
+        padding: 16px 20px;
+        border-bottom: 1px solid var(--border);
+        font-size: 14px;
+        font-weight: 600
+    }
+
+    .panel-body {
+        padding: 20px
+    }
+
+    .funnel-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 14px
+    }
+
+    .funnel-row:last-child {
+        margin-bottom: 0
+    }
+
+    .funnel-label {
+        width: 72px;
+        font-size: 13px;
+        font-weight: 500;
+        flex-shrink: 0
+    }
+
+    .funnel-track {
+        flex: 1;
+        background: var(--bg);
+        border-radius: 20px;
+        height: 10px;
+        overflow: hidden
+    }
+
+    .funnel-bar {
+        height: 100%;
+        border-radius: 20px;
+        transition: width .5s ease
+    }
+
+    .funnel-count {
+        width: 28px;
+        text-align: right;
+        font-size: 13px;
+        font-weight: 600;
+        flex-shrink: 0
+    }
+
+    .rtable {
+        width: 100%;
+        border-collapse: collapse
+    }
+
+    .rtable td {
+        padding: 10px 0;
+        border-bottom: 1px solid var(--border);
+        font-size: 13.5px;
+        vertical-align: middle
+    }
+
+    .rtable tr:last-child td {
+        border-bottom: none
+    }
+
+    .rtable .rco {
+        font-weight: 600;
+        color: var(--primary)
+    }
+
+    .rtable .rrole {
+        color: var(--muted);
+        font-size: 12.5px;
+        margin-top: 1px
+    }
+
+    .rtable a {
+        text-decoration: none;
+        color: inherit
+    }
+
+    .rtable tr:hover td {
+        background: var(--bg)
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="page">
+    <div class="ph">
+        <div>
+            <h1>Dashboard</h1>
+            <p>Overview of your job search activity</p>
+        </div>
+        <a href="/add/" class="btn btn-primary">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M12 5v14M5 12h14" />
+            </svg>
+            Add Application
+        </a>
+    </div>
+
+    {% if total == 0 %}
+    <div
+        style="text-align:center;padding:64px 32px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md)">
+        <div style="font-size:36px;opacity:.35;margin-bottom:14px">📊</div>
+        <h3 style="font-size:17px;font-weight:600;margin-bottom:8px">No data yet</h3>
+        <p style="font-size:13.5px;color:var(--muted);margin-bottom:20px">Add applications to see your analytics.</p>
+        <a href="/add/" class="btn btn-primary">Add First Application</a>
+    </div>
+    {% else %}
+
+    <!-- Stat Cards -->
+    <div class="stat-grid">
+        <div class="stat-card">
+            <div class="stat-label">Total Applied</div>
+            <div class="stat-value">{{ total }}</div>
+            <div class="stat-sub">applications tracked</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Wishlist</div>
+            <div class="stat-value" style="color:#6B7280">{{ status_counts.Wishlist }}</div>
+            <div class="stat-sub">saved for later</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Applied</div>
+            <div class="stat-value" style="color:#4F46E5">{{ status_counts.Applied }}</div>
+            <div class="stat-sub">applications sent</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Interviews</div>
+            <div class="stat-value" style="color:#2563EB">{{ status_counts.Interview }}</div>
+            <div class="stat-sub">active conversations</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Offers</div>
+            <div class="stat-value" style="color:#059669">{{ status_counts.Offer }}</div>
+            <div class="stat-sub">offer{{ status_counts.Offer|pluralize }} received</div>
+        </div>
+    </div>
+
+    <!-- Rate Cards -->
+    <div class="rate-grid">
+        <div class="rate-card">
+            <div class="rate-val" style="color:#2563EB">{{ interview_rate }}%</div>
+            <div class="rate-lbl">Interview Rate</div>
+        </div>
+        <div class="rate-card">
+            <div class="rate-val" style="color:#059669">{{ offer_rate }}%</div>
+            <div class="rate-lbl">Offer Rate</div>
+        </div>
+        <div class="rate-card">
+            <div class="rate-val" style="color:#DC2626">{{ rejection_rate }}%</div>
+            <div class="rate-lbl">Rejection Rate</div>
+        </div>
+    </div>
+
+    <!-- Panels -->
+    <div class="panels">
+
+        <!-- Funnel -->
+        <div class="panel-card">
+            <div class="panel-head">Application Funnel</div>
+            <div class="panel-body">
+                {% for item in funnel %}
+                <div class="funnel-row">
+                    <div class="funnel-label">{{ item.label }}</div>
+                    <div class="funnel-track">
+                        <div class="funnel-bar" data-pct="{{ item.pct }}" data-color="{{ item.color }}"></div>
+                    </div>
+                    <div class="funnel-count">{{ item.count }}</div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Recent Applications -->
+        <div class="panel-card">
+            <div class="panel-head">Recent Applications</div>
+            <div class="panel-body">
+                {% if recent_apps %}
+                <table class="rtable">
+                    {% for app in recent_apps %}
+                    <tr>
+                        <td>
+                            <a href="/app/{{ app.pk }}/">
+                                <div class="rco">{{ app.company }}</div>
+                                <div class="rrole">{{ app.role }}</div>
+                            </a>
+                        </td>
+                        <td style="text-align:center;padding-left:8px">
+                            <span class="badge badge-{{ app.status|lower }}">{{ app.status }}</span>
+                        </td>
+                        <td style="text-align:right;color:var(--muted);font-size:12px">{{ app.applied_date|date:"M d" }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                {% if total > 5 %}
+                <div style="margin-top:16px;text-align:center">
+                    <a href="/" style="font-size:13px;color:var(--accent);text-decoration:none">View all {{ total }}
+                        applications →</a>
+                </div>
+                {% endif %}
+                {% else %}
+                <div style="text-align:center;color:var(--muted);font-size:13.5px;padding:16px 0">No applications yet.
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+    document.querySelectorAll('.funnel-bar').forEach(function (el) {
+        el.style.width = el.dataset.pct + '%';
+        el.style.background = el.dataset.color;
+    });
+</script>
+{% endblock %}

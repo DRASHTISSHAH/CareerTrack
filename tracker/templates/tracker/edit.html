@@ -1,0 +1,103 @@
+{% extends "tracker/base.html" %}
+{% block title %}Edit — {{ app.company }} — CareerTrack{% endblock %}
+
+{% block style %}
+<style>
+    .fw {
+        max-width: 620px;
+    }
+
+    .fpanel {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--r-md);
+        padding: 28px;
+        box-shadow: var(--sh-sm);
+    }
+
+    .factions {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        padding-top: 18px;
+        border-top: 1px solid var(--border);
+        margin-top: 4px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="page">
+    <div class="ph">
+        <div>
+            <a href="/app/{{ app.pk }}/" style="color:var(--muted);text-decoration:none;font-size:13.5px">
+                ← {{ app.company }}
+            </a>
+            <h1 style="margin-top:4px">Edit Application</h1>
+            <p>Update application details</p>
+        </div>
+    </div>
+
+    <div class="fw">
+        <div class="fpanel">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-row">
+                    <div class="fg">
+                        <label class="flabel" for="company">Company <span class="req">*</span></label>
+                        <input type="text" name="company" id="company" class="fc" value="{{ app.company }}" required
+                            autofocus>
+                    </div>
+                    <div class="fg">
+                        <label class="flabel" for="role">Role <span class="req">*</span></label>
+                        <input type="text" name="role" id="role" class="fc" value="{{ app.role }}" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="fg">
+                        <label class="flabel" for="status">Status</label>
+                        <select name="status" id="status" class="fc">
+                            {% for val, label, is_sel in status_choices %}
+                            <option value="{{ val }}" {% if is_sel %}selected{% endif %}>{{ label }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="fg">
+                        <label class="flabel" for="location">Location</label>
+                        <input type="text" name="location" id="location" class="fc" value="{{ app.location }}"
+                            placeholder="e.g. Remote">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="fg">
+                        <label class="flabel" for="applied_date">Applied Date</label>
+                        <input type="date" name="applied_date" id="applied_date" class="fc"
+                            value="{{ app.applied_date|date:'Y-m-d' }}">
+                    </div>
+                    <div class="fg">
+                        <label class="flabel" for="job_url">Job URL</label>
+                        <input type="url" name="job_url" id="job_url" class="fc" value="{{ app.job_url }}"
+                            placeholder="https://…">
+                    </div>
+                </div>
+                <div class="fg">
+                    <label class="flabel" for="notes">Notes</label>
+                    <textarea name="notes" id="notes" class="fc" rows="4">{{ app.notes }}</textarea>
+                </div>
+                <div class="factions">
+                    <button type="submit" class="btn btn-primary" id="update-btn">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5">
+                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
+                            <polyline points="17 21 17 13 7 13 7 21" />
+                            <polyline points="7 3 7 8 15 8" />
+                        </svg>
+                        Update Application
+                    </button>
+                    <a href="/app/{{ app.pk }}/" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

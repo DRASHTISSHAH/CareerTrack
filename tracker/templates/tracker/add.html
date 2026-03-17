@@ -1,0 +1,104 @@
+{% extends "tracker/base.html" %}
+{% block title %}Add Application — CareerTrack{% endblock %}
+
+{% block style %}
+<style>
+    .fw {
+        max-width: 620px;
+    }
+
+    .fpanel {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--r-md);
+        padding: 28px;
+        box-shadow: var(--sh-sm);
+    }
+
+    .factions {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        padding-top: 18px;
+        border-top: 1px solid var(--border);
+        margin-top: 4px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="page">
+    <div class="ph">
+        <div>
+            <a href="/" style="color:var(--muted);text-decoration:none;font-size:13.5px">&#8592; Back to
+                Applications</a>
+            <h1 style="margin-top:4px">Add Application</h1>
+            <p>Track a new job opportunity</p>
+        </div>
+    </div>
+
+    <div class="fw">
+        <div class="fpanel">
+            <form method="POST">
+                {% csrf_token %}
+
+                <div class="form-row">
+                    <div class="fg">
+                        <label class="flabel" for="company">Company <span class="req">*</span></label>
+                        <input type="text" name="company" id="company" class="fc" placeholder="e.g. Google"
+                            value="{{ form_data.company|default:'' }}" required autofocus>
+                    </div>
+                    <div class="fg">
+                        <label class="flabel" for="role">Role <span class="req">*</span></label>
+                        <input type="text" name="role" id="role" class="fc" placeholder="e.g. Software Engineer"
+                            value="{{ form_data.role|default:'' }}" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="fg">
+                        <label class="flabel" for="status">Status</label>
+                        <select name="status" id="status" class="fc">
+                            {% for val, label, is_sel in status_choices %}
+                            <option value="{{ val }}" {% if is_sel %}selected{% endif %}>{{ label }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="fg">
+                        <label class="flabel" for="location">Location</label>
+                        <input type="text" name="location" id="location" class="fc" placeholder="e.g. Remote, New York"
+                            value="{{ form_data.location|default:'' }}">
+                    </div>
+                </div>
+
+                <div class="fg">
+                    <label class="flabel" for="job_url">Job Listing URL</label>
+                    <input type="url" name="job_url" id="job_url" class="fc" placeholder="https://..."
+                        value="{{ form_data.job_url|default:'' }}">
+                    <div class="fhint">Link to the job post (optional)</div>
+                </div>
+
+                <div class="fg">
+                    <label class="flabel" for="notes">Notes</label>
+                    <textarea name="notes" id="notes" class="fc" rows="3"
+                        placeholder="Recruiter name, referral, impressions...">{{ form_data.notes|default:'' }}</textarea>
+                </div>
+
+                <div class="factions">
+                    <button type="submit" class="btn btn-primary" id="save-btn">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5">
+                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
+                            <polyline points="17 21 17 13 7 13 7 21" />
+                            <polyline points="7 3 7 8 15 8" />
+                        </svg>
+                        Save Application
+                    </button>
+                    <a href="/" class="btn btn-secondary">Cancel</a>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
