@@ -8,6 +8,7 @@ CareerTrack is a web application designed to help users effectively manage and t
 ### 1. User Authentication
 *   **Sign Up**: Users can create a new account.
 *   **Login/Logout**: Secure access to user accounts.
+*   **Password Reset**: Users can easily reset forgotten passwords.
 
 ### 2. Job Application Management
 *   **Add Applications**: Specify details such as company, role, location, status (Wishlist, Applied, Interview, Rejected, Offer), applied date, job URL, and notes.
@@ -25,6 +26,10 @@ CareerTrack is a web application designed to help users effectively manage and t
 ### 4. AI-Powered Assistance
 *   **AI Interview Insight**: Generates tailored interview preparation questions and tactical advice using AI, based on the company, role, and your notes.
 *   **AI Career Coach Chat**: A personalized AI assistant to provide guidance and support related to your job search.
+
+### 5. REST API Integration
+*   **External Job Tracking**: Secure POST endpoint (`/api/add-job/`) allowing external bots or tools to log job applications directly to your account.
+*   **Token-Based Security**: API endpoints are protected via a `BOT_SECRET` Bearer token to ensure secure access.
 
 ## Tech Stack
 *   **Backend**: Django (Python) 6.0.2
@@ -51,7 +56,7 @@ CareerTrack is a web application designed to help users effectively manage and t
    ```
 4. Set up environment variables:
    * Create a `.env` file in the root directory.
-   * Add your secrets (e.g., `SECRET_KEY`, `GROQ_API_KEY`).
+   * Add your secrets (e.g., `SECRET_KEY`, `GROQ_API_KEY`, `BOT_SECRET`).
 5. Apply database migrations:
    ```bash
    python manage.py migrate
